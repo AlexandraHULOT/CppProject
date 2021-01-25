@@ -40,7 +40,7 @@ class EnergySupplyObject : public Object{
         //return false sinon
         template<typename T>bool plug( const T& o){
             if ( (std::is_base_of<EnergyPoweredObject,T>::value) && ((_power_unit - getPowerSupplied()) >= 0.)){
-                _powered_objects.insert(std::pair<EnergyPoweredObject,float>(o ,o.getPowerConsumption()));
+                _powered_objects.insert(std::pair<EnergyPoweredObject,float>((EnergyPoweredObject&)o ,((EnergyPoweredObject&)o).getPowerConsumption()));
                 return true;
             }
             return false;

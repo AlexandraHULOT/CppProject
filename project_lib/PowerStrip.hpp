@@ -5,7 +5,6 @@ class PowerStrip : public EnergySupplyObject
 {
 protected:
     static size_t _id;
-    static void setPrice(float new_price){ powerStrip_price = new_price;};
 private:
     // NB : voir PowerStrip.cpp pour les valeurs/parametres
 
@@ -21,7 +20,7 @@ public:
     PowerStrip(size_t x, size_t y, size_t height, size_t width) : EnergySupplyObject(x, y, height, width, powerStrip_color, powerStrip_price,powerStrip_power,"Multiprise "+std::to_string(_id++)){};
     
     //renvoie l'unite de refroidissement d'un PowerStrip
-    static float getPowerStripPower(){return powerStrip_power;};
+    static float getPower(){return powerStrip_power;};
     static sf::Color getColor(){return powerStrip_color;};
     static float getPrice(){return powerStrip_price;};
      std::string toString() const

@@ -24,8 +24,10 @@ namespace Player
         Player(){};
         int temperature = INITIAL_TEMPERATURE;
         unsigned int getWallet() const { return _wallet; };
-        std::list<EnergySupplyObject> getEnergySupplyObjects_list()const {return _supplierObjects_list;};
-        std::list<CoolingObject> getCoolingObjects_list()const {return _coolingObjects_list;};
+        std::list<EnergySupplyObject> getEnergySupplyObjects_list() const { return _supplierObjects_list; };
+        std::list<CoolingObject> getCoolingObjects_list() const { return _coolingObjects_list; };
+        template <typename Base, typename T>
+        bool instanceof (const T *) { return std::is_base_of<Base, T>::value; };
         int getTemperature()
         {
             std::list<CoolingObject>::iterator it;
@@ -35,44 +37,46 @@ namespace Player
             }
             return temperature;
         }
-        bool buy(const Glacoon &o)
+        bool buy(const Object &o)
         {
-            //si le joueur a assez de sous
-            if (_wallet >= Glacoon::getPrice())
-            {
-                //on ajoute l'objet a la liste des objets refroidissants
-                _coolingObjects_list.push_back(o);
-                return true;
-            }
-            return false;
-        }
-        bool buy(const EnergyPoweredObject &o)
-        {
+
             if (_wallet >= o.getPrice())
             {
-                std::list<EnergySupplyObject>::iterator it;
-                for (it = _supplierObjects_list.begin(); it != _supplierObjects_list.end(); it++)
+                //objet de type EnergyPoweredObject ?
+                if (instanceof <EnergyPoweredObject>(&o))
                 {
-                    //si l'un des items fournisseurs d'energie est disponible (ie. qu'il lui reste assez de puissance disponible)
-                    if (it->getRemainingPower() >= o.getPowerConsumption())
+
+                    std::list<EnergySupplyObject>::iterator it;
+                    for (it = _supplierObjects_list.begin(); it != _supplierObjects_list.end(); it++)
                     {
-                        //branchement automatique sur le premier item fournisseur d'energie (pas forcement efficace...)
-                        it->plug(o);
-                        return true;
+                        //si l'un des items fournisseurs d'energie est disponible (ie. qu'il lui reste assez de puissance disponible)
+                        if (it->getRemainingPower() >= ((EnergyPoweredObject &)o).getPowerConsumption())
+                        {
+                            //branchement automatique sur le premier item fournisseur d'energie (pas forcement efficace...)
+                            it->plug(o);
+                            _wallet -= o.getPrice();
+                            return true;
+                        }
                     }
+                }
+                //objet de type EnergySupplyObject ?
+                else if (instanceof <EnergySupplyObject>(&o))
+                {
+                    _supplierObjects_list.push_back((EnergySupplyObject &)o);
+                    _wallet -= o.getPrice();
+                    return true;
+                }
+                else
+                {
+                    //on ajoute l'objet a la liste des objets refroidissants
+                    _coolingObjects_list.push_back((CoolingObject &)o);
+                    _wallet -= o.getPrice();
+                    return true;
                 }
             }
             return false;
         }
-        bool buy(const EnergySupplyObject &o)
-        {
-            if (_wallet >= o.getPrice())
-            {
-                _supplierObjects_list.push_back(o);
-                return true;
-            }
-            return false;
-        }
+
         ~Player(){};
     };
 } // namespace Player

@@ -20,7 +20,7 @@ public:
     Glacoon() : CoolingObject(){_id++;};
     Glacoon(size_t x, size_t y, size_t height, size_t width) : CoolingObject(x, y, height, width, glacoon_color, glacoon_price, glacoon_cooling_unit,"Glacon "+std::to_string(_id++)){};
     //renvoie l'unite de refroidissement d'un glacoon
-    static float getGlacoonCoolingUnit(){return glacoon_cooling_unit;};
+    static float getCoolingUnit(){return glacoon_cooling_unit;};
     static float getPrice(){return glacoon_price;};
     static sf::Color getColor(){return glacoon_color;};
     

@@ -9,7 +9,7 @@ class EnergyPoweredObject : public CoolingObject{
         public:
         EnergyPoweredObject():CoolingObject(),_power_consumption(0.){};
         EnergyPoweredObject(size_t x, size_t y, size_t height, size_t width, sf::Color color, float price,float cooling_unit,std::string name, float power_consumption):CoolingObject(x,y,height,width,color,price,cooling_unit,name),_power_consumption(power_consumption){};
-        std::string description()const{return "";}
+        std::string description()const{return "";};
         ~EnergyPoweredObject(){};
         struct classcomp {
                 bool operator() (const EnergyPoweredObject& s1,const EnergyPoweredObject& s2)const{

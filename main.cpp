@@ -206,12 +206,13 @@ int main()
 
         //mise à jour des objets achetés -> a revoir
 
-        list<EnergySupplyObject>::iterator it;
+        /*list<EnergySupplyObject>::iterator it;
         for (it = player.getEnergySupplyObjects_list().begin(); it != player.getEnergySupplyObjects_list().end(); it++){
             RectangleShape tmp(BLOC_SIZE);
-            tmp.setPosition(it->getX(),it->getY());
-            tmp.setFillColor(it->getColor());
-        }
+            tmp.setPosition(1,2);
+            tmp.setFillColor(sf::Color::Green);
+            window.draw(tmp);
+        }*/
         /*list<CoolingObject>::iterator it2;
         for (it2 = player.getCoolingObjects_list().begin(); it2 != player.getCoolingObjects_list().end(); it2++){
             RectangleShape tmp(BLOC_SIZE);

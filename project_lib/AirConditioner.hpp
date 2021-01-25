@@ -4,7 +4,6 @@
 class AirConditioner : public EnergyPoweredObject{
 protected:
     static size_t _id;
-    static void setPrice(float new_price){ airConditioner_price = new_price;};
 private:
     // NB : voir AirConditioner.cpp pour les valeurs/parametres
 
@@ -21,7 +20,7 @@ public:
     AirConditioner() : EnergyPoweredObject(){_id++;};
     AirConditioner(size_t x, size_t y, size_t height, size_t width) : EnergyPoweredObject(x, y, height, width, airConditioner_color, airConditioner_price, airConditioner_cooling_unit,"Climatiseur "+std::to_string(_id++),airConditioner_power){};
     //renvoie l'unite de refroidissement d'un glacoon
-    static float getGlacoonCoolingUnit(){return airConditioner_cooling_unit;};
+    static float getCoolingUnit(){return airConditioner_cooling_unit;};
     static sf::Color getColor(){return airConditioner_color;};
     static float getPrice(){return airConditioner_price;};
     std::string toString() const
